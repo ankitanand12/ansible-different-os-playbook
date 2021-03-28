@@ -1,0 +1,3 @@
+name: apache2
+dis: "{{ansible_facts.distribution}}"
+service: apache2

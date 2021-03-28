@@ -1,0 +1,24 @@
+- hosts: web
+  vars_files: "{{ansible_facts.distribution}}:{{ansible_facts.distribution_major_version}}.yml"
+  tasks:
+  - name: installing web server
+    package: 
+       name: "{{name}}"
+       state: present  
+  - name: "copying pages"
+    copy:
+      content: "This is {{dis}}"
+      dest: "/var/www/html/index.html"
+  - name: "enabling port"
+    firewalld:
+            service: http
+            immediate: yes
+            state: enabled 
+    failed_when: false        
+
+  - name: "starting service"
+    service: 
+      name: "{{service}}"
+      state: started
+      enabled: true
+
